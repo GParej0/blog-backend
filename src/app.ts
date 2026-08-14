@@ -1,5 +1,6 @@
 import express  from "express";
 import cors from "cors"
+import authRouter from "./routes/authRouter.js";
 const app = express();
 
 
@@ -11,5 +12,6 @@ app.get("/", (req, res)=>{
         message: 'Welcome to the API'
     })
 })
+app.use("/auth", authRouter)
 
 app.listen(process.env.PORT || 3000, ()=>{ console.log("El puerto 3000 se está escuchando")})
