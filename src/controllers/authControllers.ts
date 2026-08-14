@@ -1,5 +1,6 @@
 import db from "../db/authquery.js"
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken"
 import {Request, Response, NextFunction} from "express"
 
 async function newUser(req: Request, res: Response, next: NextFunction) {
@@ -21,4 +22,30 @@ async function newUser(req: Request, res: Response, next: NextFunction) {
     }
 }
 
-export default {newUser}
+async function login(req: Request, res: Response, next: NextFunction) {
+    
+    try {
+    const{email, password} = req.body;
+    const user = await db.findUserByEmail(email)
+    if (!user) {
+        return res.status(401).json({ message: "Incorrect email" });
+    }
+    const match = await bcrypt.compare(password, user.password);
+    
+    if (!match) {
+        return res.status(401).json({ message: "Incorrect password" });
+     }
+    
+    const token =   jwt.sign({id:user.id, user:user.user}, process.env.JWT_SECRET! , { expiresIn: '1d' }); 
+    res.status(200).json({
+        message: "Succesfull Login",
+        token,
+        user: { id: user.id, email: user.email, name: user.user }
+    });
+    
+    }catch(err) {
+        next(err);
+    }
+}
+
+export default {newUser, login}

@@ -1,8 +1,18 @@
+### 1. Registro (si necesitas crear otro usuario)
 POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-  "email": "autor@blog.com",
+  "email": "autor1@blog.com",
   "user": "Gonzalo",
+  "password": "misuperpassword123"
+}
+
+### 2. Login con credenciales correctas
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "autor@blog.com",
   "password": "misuperpassword123"
 }
