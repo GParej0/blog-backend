@@ -1,28 +1,28 @@
-import {Request, Response, NextFunction} from "express"
-import  jwt  from "jsonwebtoken";
-function verifyToken(req:Request, res:Response, next:NextFunction) {
+import { Request, Response, NextFunction } from "express"
+import jwt from "jsonwebtoken";
+function verifyToken(req: Request, res: Response, next: NextFunction) {
 
   const bearerHeader = req.headers['authorization'];
 
-if (!bearerHeader || !bearerHeader.startsWith("Bearer ")) {
+  if (!bearerHeader || !bearerHeader.startsWith("Bearer ")) {
 
-  return res.status(401).json({ error: "Token no proporcionado o formato inválido" });
-} 
+    return res.status(401).json({ error: "Token no proporcionado o formato inválido" });
+  }
 
-const token = bearerHeader.split(" ")[1]
+  const token = bearerHeader.split(" ")[1]
 
-try{
+  try {
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET!);
-  (req as any).user = decoded;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+    (req as any).user = decoded;
 
-  next()
+    next()
 
-} catch(error){
+  } catch (error) {
 
-  return res.status(403).json({ error: "Invalid or expired token" });
+    return res.status(403).json({ error: "Invalid or expired token" });
 
-}
+  }
 
 }
 

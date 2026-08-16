@@ -1,4 +1,4 @@
-import db from "../db/authquery.js"
+import db from "../db/authQuery.js"
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken"
 import {Request, Response, NextFunction} from "express"
@@ -15,7 +15,7 @@ async function newUser(req: Request, res: Response, next: NextFunction) {
         const hashedPassword = await bcrypt.hash(password, 10);
         await db.createUser(email, hashedPassword, user);
         res.status(201).json({
-            message: "Usuario creado correctamente",
+            message: "User successfully created",
         });
     } catch (error){
         next(error)
@@ -38,7 +38,7 @@ async function login(req: Request, res: Response, next: NextFunction) {
     
     const token =   jwt.sign({id:user.id, user:user.user}, process.env.JWT_SECRET! , { expiresIn: '1d' }); 
     res.status(200).json({
-        message: "Succesfull Login",
+        message: "Successfull Login",
         token,
         user: { id: user.id, email: user.email, name: user.user }
     });

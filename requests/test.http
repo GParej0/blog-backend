@@ -16,3 +16,14 @@ Content-Type: application/json
   "email": "autor@blog.com",
   "password": "misuperpassword123"
 }
+
+### 3. Crear un nuevo post (Ruta protegida)
+POST http://localhost:3000/posts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlciI6IkdvbnphbG8iLCJpYXQiOjE3ODY4NjIzNjUsImV4cCI6MTc4Njk0ODc2NX0.J7jxWr0Www0m2Qfashk-Uyp5QtmWJWMvNf4Y3wdACH4
+Content-Type: application/json
+
+{
+  "name": "Mi Primer Artículo en el Blog",
+  "body": "Este es el contenido completo de mi primer post usando JWT y Prisma.",
+  "published": true
+}
