@@ -27,3 +27,33 @@ Content-Type: application/json
   "body": "Este es el contenido completo de mi primer post usando JWT y Prisma.",
   "published": true
 }
+
+### ===================================================
+### MÓDULO DE COMENTARIOS (Opción 1)
+### ===================================================
+
+### 1. Crear un comentario como visitante anónimo (Público)
+POST http://localhost:3000/posts/1/comments
+Content-Type: application/json
+
+{
+  "name": "Lector Anónimo",
+  "body": "¡Muy buen artículo sobre Node y TypeScript!"
+}
+
+### 2. Crear un comentario como usuario autenticado (Opcional)
+POST http://localhost:3000/posts/1/comments
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlciI6IkdvbnphbG8iLCJpYXQiOjE3ODY4NjIzNjUsImV4cCI6MTc4Njk0ODc2NX0.J7jxWr0Www0m2Qfashk-Uyp5QtmWJWMvNf4Y3wdACH4
+Content-Type: application/json
+
+{
+  "name": "Usuario Registrado",
+  "body": "Comentario vinculado a mi cuenta con JWT"
+}
+
+### 3. Obtener todos los comentarios del post 1 (Público)
+GET http://localhost:3000/posts/1/comments
+
+### 4. Borrar comentario por ID (Protegido - Requiere Token de Autor/Dueño)
+DELETE http://localhost:3000/comments/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlciI6IkdvbnphbG8iLCJpYXQiOjE3ODY4NjIzNjUsImV4cCI6MTc4Njk0ODc2NX0.J7jxWr0Www0m2Qfashk-Uyp5QtmWJWMvNf4Y3wdACH4
