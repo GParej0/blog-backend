@@ -57,3 +57,5 @@ GET http://localhost:3000/posts/1/comments
 ### 4. Borrar comentario por ID (Protegido - Requiere Token de Autor/Dueño)
 DELETE http://localhost:3000/comments/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlciI6IkdvbnphbG8iLCJpYXQiOjE3ODY4NjIzNjUsImV4cCI6MTc4Njk0ODc2NX0.J7jxWr0Www0m2Qfashk-Uyp5QtmWJWMvNf4Y3wdACH4
+### Probar endpoint raíz o posts públicos en producción
+GET https://blog-api-4qqr.onrender.com/posts

@@ -1,49 +1,49 @@
-import {prisma} from "./prisma.js"
+import { prisma } from "./prisma.js"
 
 async function getPublishedPosts() {
     return await prisma.post.findMany({
-        where:{published: true}, 
-        orderBy:{createdAt: "desc"}, 
+        where: { published: true },
+        orderBy: { createdAt: "desc" },
         include: { user: { select: { user: true } } }
     })
 }
 
-async function createPost(name:string, body:string, published:boolean, userId:number) {
+async function createPost(name: string, body: string, published: boolean, userId: number) {
     return await prisma.post.create({
-        data:{
-            name:name,
-            body:body,
+        data: {
+            name: name,
+            body: body,
             published: published,
             userId: userId
         }
     })
 }
 
-async function getUserPosts(userId:number){
+async function getUserPosts(userId: number) {
     return await prisma.post.findMany({
-        where:{ userId: userId },
-        orderBy:{createdAt: "desc"}, 
+        where: { userId: userId },
+        orderBy: { createdAt: "desc" },
         include: { user: { select: { user: true } } }
     })
 }
 
-async function getPostById(id:number){
+async function getPostById(id: number) {
     return await prisma.post.findUnique({
-        where:{id},
-        include: { 
+        where: { id },
+        include: {
             user: { select: { user: true } },
-            comments: { orderBy: { createdAt: "desc" } } 
+            comments: { orderBy: { createdAt: "asc" } }
         }
     })
 }
 
-async function updatePost(id:number, userId:number, updatedName:string, updatedBody:string, updatedPublished:boolean){
+async function updatePost(id: number, userId: number, updatedName: string, updatedBody: string, updatedPublished: boolean) {
     return await prisma.post.updateMany({
-        where:{
-            id:id,
-            userId:userId
+        where: {
+            id: id,
+            userId: userId
         },
-        data:{
+        data: {
             name: updatedName,
             body: updatedBody,
             published: updatedPublished
@@ -51,13 +51,13 @@ async function updatePost(id:number, userId:number, updatedName:string, updatedB
     })
 }
 
-async function deletePost(id:number, userId: number) {
+async function deletePost(id: number, userId: number) {
     return await prisma.post.deleteMany({
-        where:{id, userId}
+        where: { id, userId }
     })
 }
 
-export default{
+export default {
     getPublishedPosts,
     getUserPosts,
     getPostById,
